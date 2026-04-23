@@ -2,7 +2,7 @@ import asyncio
 import requests
 import re
 from telethon import TelegramClient
-from googletrans import Translator
+from deep_translator import GoogleTranslator
 
 # ================= CONFIG =================
 api_id = 37806549
