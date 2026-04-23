@@ -1,17 +1,16 @@
 import asyncio
-import requests
 import re
+import requests
 from telethon import TelegramClient
 from deep_translator import GoogleTranslator
 
 # ================= CONFIG =================
 api_id = 37806549
-api_hash = '0def3994b17eec4000f7eaf491158d71'
-
+api_hash = "0def3994b17eec4000f7eaf491158d71"
 BOT_TOKEN = "8743984646:AAFk1VfO4uHcEHZ_8CO-Z-76AKHkj4YSzLo"
-CHANNEL_ID = -1003946601319
+CHANNEL_ID = " -1003946601319"
 
-# Mix of your Amharic + fast news sources
+# Mix of Amharic + fast news sources
 SOURCE_CHANNELS = [
     "bisrat_sport_433et",
     "Sport_433et",
@@ -22,10 +21,9 @@ SOURCE_CHANNELS = [
 ]
 # ==========================================
 
-translator = Translator()
 posted = set()
 
-# 🚀 Send message
+# 🚀 Send message to Telegram channel
 def send_to_channel(text):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
     data = {
@@ -42,11 +40,12 @@ def clean_text(text):
     text = re.sub(r'#\w+', '', text)
     return text.strip()
 
-# 🌍 Translate to Amharic
+# 🌍 Translate to Amharic (FIXED)
 def to_amharic(text):
     try:
-        return translator.translate(text, dest='am').text
-    except:
+        return GoogleTranslator(source='auto', target='am').translate(text)
+    except Exception as e:
+        print("⚠️ Translation failed:", e)
         return text
 
 # 🔥 Filter important news
@@ -92,7 +91,7 @@ async def main():
 
                         cleaned = clean_text(original)
 
-                        # Only translate if not already Amharic
+                        # Translate only if not Amharic already
                         if not any('\u1200' <= c <= '\u137F' for c in cleaned):
                             if is_important(cleaned):
                                 cleaned = to_amharic(cleaned)
@@ -110,6 +109,7 @@ async def main():
                     print(f"❌ {channel}:", e)
 
             print("\n⏳ Waiting 1 minute...\n")
-            await asyncio.sleep(60)  # ⏱ 1 minute
+            await asyncio.sleep(60)
 
+# 🚀 RUN BOT
 asyncio.run(main())
