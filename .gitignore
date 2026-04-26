@@ -1,0 +1,16 @@
+# Telegram session files
+*.session
+*.session-journal
+session.session
+session.session-journal
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.env

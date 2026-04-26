@@ -1,14 +1,15 @@
 import asyncio
+import os
 import re
 import requests
 from telethon import TelegramClient
 from deep_translator import GoogleTranslator
 
 # ================= CONFIG =================
-api_id = 37806549
-api_hash = "0def3994b17eec4000f7eaf491158d71"
-BOT_TOKEN = "8743984646:AAFk1VfO4uHcEHZ_8CO-Z-76AKHkj4YSzLo"
-CHANNEL_ID = " -1003946601319"
+api_id = int(os.getenv('TELEGRAM_API_ID'))
+api_hash = os.getenv('TELEGRAM_API_HASH')
+BOT_TOKEN = os.getenv('BOT_TOKEN')
+CHANNEL_ID = int(os.getenv('CHANNEL_ID'))
 
 # Mix of Amharic + fast news sources
 SOURCE_CHANNELS = [
